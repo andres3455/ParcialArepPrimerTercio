@@ -54,11 +54,11 @@ public class facadeserver {
                     }
 
                 } catch (IOException | URISyntaxException e) {
-                    System.err.println("❌ Error processing request: " + e.getMessage());
+                    System.err.println(" Error processing request: " + e.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.err.println("❌ Could not start server on port 5000: " + e.getMessage());
+            System.err.println("Could not start server on port 5000: " + e.getMessage());
         }
     }
 
