@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflective ChatGPT</title>
+</head>
+<body>
+<h1>Reflective ChatGPT</h1>
+
+<label for="command">Ingrese su comando:</label>
+<input type="text" id="command" placeholder="Ejemplo: unaryInvoke(java.lang.Math,sqrt,double,25)">
+<button onclick="sendCommand()">Enviar</button>
+
+<h2>Respuesta:</h2>
+<pre id="response"></pre>
+
+<script>
+    function sendCommand() {
+        const command = document.getElementById("command").value;
+
+        fetch("http://localhost:4000/compreflex?comando=" + encodeURIComponent(command), {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("HTTP error! Status: " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById("response").innerText = "Error: " + error.message;
+                console.error("[DEBUG] Fetch error:", error);
+            });
+    }
+</script>
+</body>
+</html>

@@ -19,7 +19,7 @@ public class facadeserver {
                      BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
                      OutputStream outputStream = clientSocket.getOutputStream()) {
 
-                    System.out.println("🔗 Connection received...");
+                    System.out.println("Conexion con el cliente exitosa");
                     String requestLine = in.readLine();
                     if (requestLine == null || requestLine.trim().isEmpty()) {
                         sendResponse(outputStream, "400 Bad Request", "Invalid Request", "text/plain");
@@ -81,14 +81,14 @@ public class facadeserver {
 
             // Extraer manualmente el valor de "command"
             String command = extractCommand(body);
-            System.out.println("[DEBUG] Extracted Command: '" + command + "'");
+            System.out.println(" Extracted Command: '" + command + "'");
 
             // Enviar solo el comando limpio al backend
             out.println(command);
 
             // Leer la respuesta del backend
             String response = in.lines().collect(Collectors.joining());
-            System.out.println("[DEBUG] Response from backend: " + response);
+            System.out.println("Response from backend: " + response);
             return response;
 
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class facadeserver {
 
     private static void sendResponse(OutputStream outputStream, String status, String body, String contentType) throws IOException {
         String response = "HTTP/1.1 " + status + "\r\n" +
-                "Access-Control-Allow-Origin: *\r\n" +  // 🔹 Permite solicitudes desde cualquier origen
+                "Access-Control-Allow-Origin: *\r\n" +  //
                 "Content-Type: " + contentType + "\r\n" +
                 "Content-Length: " + body.length() + "\r\n" +
                 "\r\n" + body;
